@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Calculator</title>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #e2e8f0;
+            margin: 0;
+        }
+        .main{
+            background: #d97c42;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #000000;
+            text-align: center;
+            
+        }
+        .display{
+            
+            
+            background-color: #f1f5f9;
+            text-align: right;
+            padding: 10px;
+            font-size: 24px;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+           
+        }
+        .button{
+            
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            gap: 5px;
+            
+           
+        }
+        button{
+            height: 60px;
+            font-size: 20px;           
+            background: rgb(255, 255, 255);
+            border-radius: 8px;
+            border:none;
+
+        }
+        button:hover{
+            background-color: #e9bb96;
+        }
+        .delchar:hover{
+            background-color: rgb(52, 52, 52);
+            color: #e2e8f0;
+        }
+        .clear:hover{
+            background-color: rgb(249, 1, 1);
+            color: #e2e8f0;
+        }
+        .result:hover{
+            background-color: green;
+            color: #e2e8f0;
+        }
+        
+    </style>
+
+</head>
+<body>
+    
+<div class="main">
+
+        <h1>Calculator</h1>
+        
+        
+        <div class="display" id="display" >0</div>
+        
+    <div class="button">
+        <button class="brackets" onclick="setbracket('(')" > ( </button>
+        <button class="brackets" onclick="setbracket(')')" > ) </button>
+        <button class="clear" onclick="clearDisplay()">C</button>
+        <button class="delchar" onclick="deleteLastChar()">
+        <i class="fas fa-delete-left"></i>
+        </button>
+
+        <button class="numbers" onclick="setNumber('7')" >7</button>
+        <button class="numbers" onclick="setNumber('8')">8</button>
+        <button class="numbers" onclick="setNumber('9')">9</button>
+        <button class="numbers" onclick="setOprend('/')"><i class="fa-solid fa-divide"></i></button>
+        
+        <button class="numbers" onclick="setNumber('4')">4</button>
+        <button class="numbers" onclick="setNumber('5')">5</button>
+        <button class="numbers" onclick="setNumber('6')" >6</button>
+        <button class="numbers" onclick="setOprend('*')"><i class="fa-solid fa-xmark"></i></button>
+        
+        <button class="numbers" onclick="setNumber('1')" >1</button>
+        <button class="numbers" onclick="setNumber('2')" >2</button>
+        <button class="numbers" onclick="setNumber('3')">3</button>
+        <button class="numbers" onclick="setOprend('-')"><i class="fa-solid fa-minus"></i></i></button>
+        
+        <button class="numbers" onclick="setNumber('0')">0</button>
+        <button class="numbers" onclick="setNumber('.')">.</button>
+        <button class="numbers result" onclick="calculateResult()" ><i class="fa-solid fa-equals"></i></button>
+        <button class="numbers"onclick="setOprend('+')"><i class="fa-solid fa-plus"></i></i></button>
+        
+    </div>
+        </div>
+</div>
+
+
+
+ <script>
+       
+    let display=document.getElementById("display");
+    let currentInput="";
+
+    function setNumber(num){
+        if(currentInput === "0" && num !=="." ){
+            currentInput = num;
+        }else{
+            currentInput += num;
+        }
+        display.textContent = currentInput;
+    }
+
+    function setOprend(op){
+        if(currentInput==="") return;
+        const lastChar =currentInput[currentInput.length - 1];
+        if("+-*/".includes(lastChar)){
+            currentInput = currentInput.slice(0, -1)+op;
+        }else{
+            currentInput += op;
+        }
+        display.textContent = currentInput;
+    }
+       
+    function calculateResult(){
+        try{
+            let result = eval(currentInput);
+            display.textContent = result;
+            currentInput = result.toString();
+        }catch{
+            display.textContent = "Error";
+            currentInput="";
+        }
+    }
+
+    function clearDisplay(){
+        currentInput= "";
+        display.textContent = "0";
+    }
+
+    function deleteLastChar(){
+        if(currentInput.length > 1){
+            currentInput = currentInput.slice(0, -1);
+            display.textContent = currentInput;
+    }else{
+        currentInput = "0";
+    }
+    }
+
+    function setbracket(brackets){
+        currentInput +=brackets;
+        display.textContent = currentInput;
+    }
+
+ </script>
+
+</body>
+</html>
